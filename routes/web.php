@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,4 +14,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('/', 'IndexController');
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Auth::routes();
+
+// Admin Part
+Route::middleware(['auth'])->group(function () {
+    Route::prefix('admin')->group(function () {
+        // Amin routes
+        Route::resource('admins', 'Admin\AdminController');
+        Route::resource('roles', 'Admin\RoleController');
+        Route::resource('categories', 'Admin\CategoryController');
+        Route::resource('users', 'Admin\UserController');
+        Route::resource('settings', 'Admin\SettingController');
+    });
+    // Default
+    Route::get('/home', 'HomeController@index')->name('home');
+});

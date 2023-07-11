@@ -1,4 +1,8 @@
 <?php
+function setting($name)
+{
+    return \App\Models\Setting::getValue($name);
+}
 
 function upload_file($file,$file_path = null,$name = null ): string
 {
