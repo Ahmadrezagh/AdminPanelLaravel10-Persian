@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Arr;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -96,9 +97,37 @@ class User extends Authenticatable
         return $this->profile ?? '/uploads/profiles/default/user.png';
     }
 
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class);
+    }
+
     public function hasPermission(Permission $permission)
     {
+        return $this->hasPermissionsThroughRole($permission) || $this->permissions->contains($permission);
+    }
 
+    protected function hasPermissionsThroughRole(Permission $permission)
+    {
+        foreach ($permission->roles as $role)
+        {
+            if($this->roles->contains($role)) return true;
+        }
+        return false;
+    }
+
+    public function refreshRoles(... $roles)
+    {
+        $roles = $this->getAllRoles($roles);
+
+        $this->roles()->sync($roles);
+
+        return $this;
+    }
+
+    function getAllRoles(array $role)
+    {
+        return Role::wherein('name' , Arr::flatten($role))->get();
     }
 
 }

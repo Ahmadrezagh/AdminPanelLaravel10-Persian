@@ -294,7 +294,7 @@
                                 @if(auth()->user()->isSuperAdmin())
                                     مدیر ارشد وبسایت
                                 @elseif(auth()->user()->isAdmin())
-                                    {{auth()->user()->role()->first()->name ?? ' - '}}
+                                    {{auth()->user()->roles()->first()->name ?? ' - '}}
                                 @else
                                     مشتری
                                 @endif
@@ -411,7 +411,7 @@
                                     @if(auth()->user()->isSuperAdmin())
                                         مدیر ارشد وبسایت
                                     @elseif(auth()->user()->isAdmin())
-                                        {{auth()->user()->role()->first()->name ?? ' - '}}
+                                        {{auth()->user()->roles()->first()->name ?? ' - '}}
                                     @else
                                         مشتری
                                     @endif

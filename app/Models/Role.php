@@ -18,4 +18,17 @@ class Role extends Model
         return $this->belongsToMany(Permission::class);
     }
 
+    public function refreshPermissions(... $permissions)
+    {
+        $permissions = $this->getAllPermissions($permissions);
+
+        $this->permissions()->sync($permissions);
+
+        return $this;
+    }
+
+    function getAllPermissions(array $permissions)
+    {
+        return Permission::wherein('name' , Arr::flatten($permissions))->get();
+    }
 }

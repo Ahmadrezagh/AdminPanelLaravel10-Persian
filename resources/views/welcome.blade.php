@@ -60,6 +60,7 @@
             src: url(/fonts/ttf/iranyekanwebboldfanum.ttf);
         }
     </style>
+
 </head>
 <body style="font-family: IranYekan">
 <div class="flex-center position-ref full-height">
@@ -88,4 +89,5 @@
     </div>
 </div>
 </body>
+
 </html>

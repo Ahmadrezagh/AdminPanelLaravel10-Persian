@@ -25,17 +25,4 @@ class Permission extends Model
         return $this->belongsToMany(Permission::class);
     }
 
-    public function hasPermission(Permission $permission)
-    {
-        return $this->permissions->contains($permission) || $this->hasPermissionsThroughRole($permission);
-    }
-
-    protected function hasPermissionsThroughRole(Permission $permission)
-    {
-        foreach ($permission->roles as $role)
-        {
-            if($this->roles->contains($role)) return true;
-        }
-        return false;
-    }
 }
