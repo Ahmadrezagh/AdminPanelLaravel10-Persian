@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profile',
+        'type_id',
+        'phone'
     ];
 
     /**
@@ -42,4 +45,60 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    public function isSuperAdmin()
+    {
+        return ($this->type_id == 1);
+    }
+    //  Admin
+    //  Get Admins
+    public function scopeAdmins($query)
+    {
+        return $query->where('type_id', 2);
+    }
+
+    //  Check is admin
+    public function isAdmin()
+    {
+        return ($this->type_id == 2);
+    }
+
+    // if user is admin , show admin's role
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+
+
+    //
+    //  User
+    // Get All users
+    public function scopeUsers($query)
+    {
+        return $query->where('type_id', 3);
+    }
+
+    // Check is user
+    public function isUser()
+    {
+        return $this->type_id == 3  ? true : false;
+    }
+
+    public function type()
+    {
+        return $this->belongsTo('App\Models\Type');
+    }
+
+    public function profile()
+    {
+        return $this->profile ?? '/uploads/profiles/default/user.png';
+    }
+
+    public function hasPermission(Permission $permission)
+    {
+
+    }
+
 }
