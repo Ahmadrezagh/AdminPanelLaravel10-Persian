@@ -11,6 +11,11 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = !is_null($value) ? bcrypt($value) : $this->password;
+    }
+
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
