@@ -50,7 +50,7 @@
                                             <button class="btn ripple btn-main-primary btn-block">ایجاد حساب</button>
                                         </form>
                                         <div class="text-right mt-5 ml-0">
-                                            <p class="mb-0">در حال حاضر یک حساب کاربری دارید <a href="signin.html">ورود</a></p>
+                                            <p class="mb-0">در حال حاضر یک حساب کاربری دارید <a href="{{route('login')}}">ورود</a></p>
                                         </div>
                                     </div>
                                 </div>
